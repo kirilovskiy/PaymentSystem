@@ -2,8 +2,8 @@ package org.example.service.impl;
 
 import org.example.converter.AccountConverter;
 import org.example.entity.Account;
-import org.example.exceptions.handler.NegativeBalanceException;
-import org.example.exceptions.handler.NotFoundException;
+import org.example.exceptions.NegativeBalanceException;
+import org.example.exceptions.NotFoundException;
 import org.example.model.AccountModel;
 import org.example.model.TransferInfo;
 import org.example.repo.AccountRepository;

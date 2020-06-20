@@ -2,6 +2,8 @@ package org.example.exceptions.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.example.exceptions.NegativeBalanceException;
+import org.example.exceptions.NotFoundException;
 import org.example.model.ApiError;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
