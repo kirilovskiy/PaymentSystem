@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -32,6 +33,12 @@ public class AccountServiceImpl implements AccountService {
 	public AccountModel save(AccountModel accountModel) {
 		Account account = ACCOUNT_CONVERTER.modelToEntity(accountModel);
 		return ACCOUNT_CONVERTER.entityToModel(accountRepository.save(account));
+	}
+
+	@Override
+	public List<AccountModel> saveAll(List<AccountModel> accountModels) {
+		List<Account> account = ACCOUNT_CONVERTER.modelToEntityList(accountModels);
+		return ACCOUNT_CONVERTER.entityToModelList(accountRepository.saveAll(account));
 	}
 
 	@Override
@@ -86,10 +93,16 @@ public class AccountServiceImpl implements AccountService {
 		}
 	}
 
-	@Transactional
-	public void doTransfer(final AccountModel fromAccount, final AccountModel toAccount, final BigDecimal amount) {
-		withdrawMoney(amount, fromAccount.getAccountNumber());
-		putMoney(amount, toAccount.getAccountNumber());
+	private void doTransfer(final AccountModel fromAccount, final AccountModel toAccount, final BigDecimal amount) {
+		/*withdrawMoney(amount, fromAccount.getAccountNumber());
+		putMoney(amount, toAccount.getAccountNumber());*/
+		if (fromAccount.getAmount().compareTo(amount) < 0) {
+			throw new NegativeBalanceException("Баланс по счету не может быть отрицательным!");
+		}
+		fromAccount.setAmount(fromAccount.getAmount().subtract(amount));
+		toAccount.setAmount(toAccount.getAmount().add(amount));
+
+		this.saveAll(Arrays.asList(fromAccount, toAccount));
 	}
 
 }

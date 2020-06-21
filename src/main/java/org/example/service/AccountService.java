@@ -14,6 +14,8 @@ public interface AccountService {
 
 	AccountModel save(AccountModel account);
 
+	List<AccountModel> saveAll(List<AccountModel> accountModels);
+
 	void deleteBy(Long id);
 
 	AccountModel putMoney(BigDecimal amount, Long accountNumber);

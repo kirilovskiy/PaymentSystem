@@ -13,6 +13,8 @@ public interface AccountConverter {
 
 	AccountModel entityToModel(Account entity);
 
+	List<Account> modelToEntityList(List<AccountModel> entities);
+
 	List<AccountModel> entityToModelList(List<Account> entities);
 
 }
